@@ -1,24 +1,31 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
-function App() {
+const App = () => {
+  const [appState, setState] = useState({
+    title: 'App Proventos',
+    isModalOpen: false,
+    data: {
+      Proventos: [],
+      aportes: []
+    }
+  });
+
+  useEffect(() => {
+    document.title = appState.title;
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <>
+      <header className="appHeader">
+        <h1>{appState.title}</h1>
+        <nav className="appNavigation">
+          <button>+ Provento</button>
+          <button>+ Aporte</button>
+        </nav>
       </header>
-    </div>
+      <main className="appContent"></main>
+    </>
   );
 }
 
