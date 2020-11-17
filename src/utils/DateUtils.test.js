@@ -1,4 +1,4 @@
-import { DateUtils } from '../utils/DateUtils';
+import { DateUtils } from './DateUtils';
 
 describe('DateUtils', () => {
     test(`It should return ${DateUtils.getTodayFormated()} when empty`, () => {
