@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { DateUtils } from '../utils/DateUtils';
+import { DateUtils } from '../../utils/DateUtils';
 
 export const ERROR_MESSAGES = {
     EMPTY_FIELDS: 'Todos os campos são obrigatórios'
 };
 
-const NewInfo = ({title, saveAction}) => {
+const NewInfo = ({title, saveAction, cancelAction, infoKey}) => {
     const [state, setState] = useState({
         isErrorMessageVisible: false,
         errorMessage: ERROR_MESSAGES.EMPTY_FIELDS
@@ -13,7 +13,8 @@ const NewInfo = ({title, saveAction}) => {
 
     const [formData, setFormData] = useState({
         date: '',
-        value: ''
+        value: '',
+        infoKey: infoKey
     });
 
     // Functions
@@ -21,11 +22,19 @@ const NewInfo = ({title, saveAction}) => {
         evt.preventDefault();
 
         if (!validateForm(formData)) {
-            setState({...state, isErrorMessageVisible: true})
+            setState({
+                ...state,
+                isErrorMessageVisible: true,
+            })
             return false;
         }
 
         saveAction(formData);
+    }
+
+    const handleCancel = (evt) => {
+        evt.preventDefault();
+        cancelAction();
     }
 
     const handleSubmit = (evt) => {
@@ -71,7 +80,7 @@ const errorMessage = state.isErrorMessageVisible ?
                     <input id="fld-value" data-statekey="value" onChange={handleChange} value={formData.value} />
                 </section>
                 <div>
-                    <button>Cancelar</button>
+                    <button onClick={handleCancel}>Cancelar</button>
                     <button onClick={handleSave}>Salvar</button>
                 </div>
             </form>
