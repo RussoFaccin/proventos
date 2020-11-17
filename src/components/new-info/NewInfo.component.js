@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from 'prop-types';
 import { DateUtils } from '../../utils/DateUtils';
 
 export const ERROR_MESSAGES = {
@@ -86,6 +87,13 @@ const errorMessage = state.isErrorMessageVisible ?
             </form>
         </section>
     );
+}
+
+NewInfo.propTypes = {
+    title: PropTypes.string,
+    saveAction: PropTypes.func.isRequired,
+    cancelAction: PropTypes.func.isRequired,
+    infoKey: PropTypes.string.isRequired
 }
 
 export default NewInfo;
