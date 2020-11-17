@@ -4,33 +4,34 @@ import NewInfo, { ERROR_MESSAGES } from './NewInfo.component';
 
 describe('<NewInfo/>', () => {    
     const saveAction = jest.fn();
+    const cancelAction = jest.fn();
 
     test('It should render the component', () => {
-        render(<NewInfo title="Proventos" saveAction={saveAction} infoKey="proventos" />);
+        render(<NewInfo title="Proventos" saveAction={saveAction} cancelAction={cancelAction} infoKey="proventos" />);
     });
 
     test('It should have "Proventos" title', () => {
-        render(<NewInfo title="Proventos" saveAction={saveAction} infoKey="proventos" />);
+        render(<NewInfo title="Proventos" saveAction={saveAction} cancelAction={cancelAction} infoKey="proventos" />);
 
         screen.getByRole('heading', {name: /proventos/i})
     });
 
     test('It should have "Data" and "Value" fields', () => {
-        render(<NewInfo title="Proventos" saveAction={saveAction} infoKey="proventos" />);
+        render(<NewInfo title="Proventos" saveAction={saveAction} cancelAction={cancelAction} infoKey="proventos" />);
 
         screen.getByLabelText(/data/i);
         screen.getByRole('textbox', {name: /value/i});
     });
 
     test('It should have "Salvar" and "Cancelar" buttons', () => {
-        render(<NewInfo title="Proventos" saveAction={saveAction} infoKey="proventos" />);
+        render(<NewInfo title="Proventos" saveAction={saveAction} cancelAction={cancelAction} infoKey="proventos" />);
 
         screen.getByRole('button', {name: /salvar/i});
         screen.getByRole('button', {name: /cancelar/i});
     });
 
     test('It should display error message when some fields were empty', () => {
-        render(<NewInfo title="Proventos" saveAction={saveAction} infoKey="proventos" />);
+        render(<NewInfo title="Proventos" saveAction={saveAction} cancelAction={cancelAction} infoKey="proventos" />);
 
         fireEvent.click(screen.getByRole('button', {name: /salvar/i}));
         
@@ -39,7 +40,7 @@ describe('<NewInfo/>', () => {
     });
 
     test('It should not diplay error message when fields were filled', () => {
-        render(<NewInfo title="Proventos" saveAction={saveAction} infoKey="proventos" />);
+        render(<NewInfo title="Proventos" saveAction={saveAction} cancelAction={cancelAction} infoKey="proventos" />);
 
         fireEvent.change(screen.getByLabelText(/data/i), { target: { value: '2020-10-05' } });
         fireEvent.change(screen.getByRole('textbox', {name: /value/i}), { target: { value: '450.65' } });
@@ -50,7 +51,7 @@ describe('<NewInfo/>', () => {
     });
 
     test('It should return field values', () => {
-        render(<NewInfo title="Proventos" saveAction={saveAction} infoKey="proventos" />);
+        render(<NewInfo title="Proventos" saveAction={saveAction} cancelAction={cancelAction} infoKey="proventos" />);
 
         fireEvent.change(screen.getByLabelText(/data/i), { target: { value: '2020-10-05' } });
         fireEvent.change(screen.getByRole('textbox', {name: /value/i}), { target: { value: '450.65' } });
@@ -64,7 +65,7 @@ describe('<NewInfo/>', () => {
 
     test('It should return "proventos" property', () => {
         let actionReturn;
-        render(<NewInfo title="Proventos" saveAction={saveAction} infoKey="proventos" />);
+        render(<NewInfo title="Proventos" saveAction={saveAction} cancelAction={cancelAction} infoKey="proventos" />);
         
         fireEvent.change(screen.getByLabelText(/data/i), { target: { value: '2020-10-05' } });
         fireEvent.change(screen.getByRole('textbox', {name: /value/i}), { target: { value: '450.65' } });
@@ -77,7 +78,7 @@ describe('<NewInfo/>', () => {
 
     test('It should return "aportes" property', () => {
         let actionReturn;
-        render(<NewInfo title="Aportes" saveAction={saveAction} infoKey="aportes" />);
+        render(<NewInfo title="Aportes" saveAction={saveAction} cancelAction={cancelAction} infoKey="aportes" />);
         
         fireEvent.change(screen.getByLabelText(/data/i), { target: { value: '2020-10-05' } });
         fireEvent.change(screen.getByRole('textbox', {name: /value/i}), { target: { value: '450.65' } });
