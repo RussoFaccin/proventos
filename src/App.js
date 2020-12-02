@@ -3,6 +3,7 @@ import './App.css';
 
 // Components
 import NewInfo from './components/new-info/NewInfo.component';
+import AppChart from './components/app-chart/AppChart.coomponent';
 
 const App = () => {
   const [appState, setState] = useState({
@@ -80,6 +81,7 @@ const App = () => {
       </header>
       <main className="appContent">
         {newInfoModal}
+        <AppChart />
       </main>
     </>
   );
