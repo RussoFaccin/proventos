@@ -13,7 +13,7 @@ const NewInfo = ({title, saveAction, cancelAction, infoKey}) => {
     });
 
     const [formData, setFormData] = useState({
-        date: '',
+        date: DateUtils.getTodayFormated(),
         value: '',
         infoKey: infoKey
     });
