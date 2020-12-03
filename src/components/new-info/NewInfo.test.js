@@ -6,31 +6,31 @@ describe('<NewInfo/>', () => {
     const saveAction = jest.fn();
     const cancelAction = jest.fn();
 
-    test('It should render the component', () => {
+    it('It should render the component', () => {
         render(<NewInfo title="Proventos" saveAction={saveAction} cancelAction={cancelAction} infoKey="proventos" />);
     });
 
-    test('It should have "Proventos" title', () => {
+    it('It should have "Proventos" title', () => {
         render(<NewInfo title="Proventos" saveAction={saveAction} cancelAction={cancelAction} infoKey="proventos" />);
 
         screen.getByRole('heading', {name: /proventos/i})
     });
 
-    test('It should have "Data" and "Value" fields', () => {
+    it('It should have "Data" and "Value" fields', () => {
         render(<NewInfo title="Proventos" saveAction={saveAction} cancelAction={cancelAction} infoKey="proventos" />);
 
         screen.getByLabelText(/data/i);
         screen.getByRole('textbox', {name: /value/i});
     });
 
-    test('It should have "Salvar" and "Cancelar" buttons', () => {
+    it('It should have "Salvar" and "Cancelar" buttons', () => {
         render(<NewInfo title="Proventos" saveAction={saveAction} cancelAction={cancelAction} infoKey="proventos" />);
 
         screen.getByRole('button', {name: /salvar/i});
         screen.getByRole('button', {name: /cancelar/i});
     });
 
-    test('It should display error message when some fields were empty', () => {
+    it('It should display error message when some fields were empty', () => {
         render(<NewInfo title="Proventos" saveAction={saveAction} cancelAction={cancelAction} infoKey="proventos" />);
 
         fireEvent.click(screen.getByRole('button', {name: /salvar/i}));
@@ -39,7 +39,7 @@ describe('<NewInfo/>', () => {
         screen.getByText(ERROR_MESSAGES.EMPTY_FIELDS);
     });
 
-    test('It should not diplay error message when fields were filled', () => {
+    it('It should not diplay error message when fields were filled', () => {
         render(<NewInfo title="Proventos" saveAction={saveAction} cancelAction={cancelAction} infoKey="proventos" />);
 
         fireEvent.change(screen.getByLabelText(/data/i), { target: { value: '2020-10-05' } });
@@ -50,7 +50,7 @@ describe('<NewInfo/>', () => {
         expect(screen.queryByTitle(/Message Box/i)).toBeNull();
     });
 
-    test('It should return field values and close window', () => {
+    it('It should return field values and close window', () => {
         render(<NewInfo title="Proventos" saveAction={saveAction} cancelAction={cancelAction} infoKey="proventos" />);
 
         fireEvent.change(screen.getByLabelText(/data/i), { target: { value: '2020-10-05' } });
@@ -64,7 +64,7 @@ describe('<NewInfo/>', () => {
         expect(cancelAction).toBeCalled();
     });
 
-    test('It should return "proventos" property', () => {
+    it('It should return "proventos" property', () => {
         let actionReturn;
         render(<NewInfo title="Proventos" saveAction={saveAction} cancelAction={cancelAction} infoKey="proventos" />);
         
@@ -77,7 +77,7 @@ describe('<NewInfo/>', () => {
         expect(actionReturn.infoKey).toBe('proventos');
     });
 
-    test('It should return "aportes" property', () => {
+    it('It should return "aportes" property', () => {
         let actionReturn;
         render(<NewInfo title="Aportes" saveAction={saveAction} cancelAction={cancelAction} infoKey="aportes" />);
         
@@ -86,6 +86,21 @@ describe('<NewInfo/>', () => {
 
         fireEvent.click(screen.getByRole('button', {name: /salvar/i}));
         actionReturn = saveAction.mock.calls[0][0];
+        
+        expect(actionReturn.infoKey).toBe('aportes');
+    });
+
+    it('It should update the component', () => {
+        const {rerender} = render(<NewInfo title="Proventos" saveAction={saveAction} cancelAction={cancelAction} infoKey="proventos" />);
+        rerender(<NewInfo title="Aportes" saveAction={saveAction} cancelAction={cancelAction} infoKey="aportes" />);
+        
+        screen.getByRole('heading', {name: /aportes/i})
+
+        fireEvent.change(screen.getByLabelText(/data/i), { target: { value: '2020-10-05' } });
+        fireEvent.change(screen.getByRole('textbox', {name: /value/i}), { target: { value: '450.65' } });
+
+        fireEvent.click(screen.getByRole('button', {name: /salvar/i}));
+        const actionReturn = saveAction.mock.calls[0][0];
         
         expect(actionReturn.infoKey).toBe('aportes');
     });

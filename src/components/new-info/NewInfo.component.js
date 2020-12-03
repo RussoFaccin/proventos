@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import { DateUtils } from '../../utils/DateUtils';
 
@@ -17,6 +17,18 @@ const NewInfo = ({title, saveAction, cancelAction, infoKey}) => {
         value: '',
         infoKey: infoKey
     });
+
+    useEffect(() => {
+        setState({
+            ...state,
+            title: title
+        });
+
+        setFormData({
+            ...formData,
+            infoKey: infoKey
+        });
+    }, [title, infoKey])
 
     // Functions
     const handleSave = (evt) => {
@@ -70,7 +82,7 @@ const errorMessage = state.isErrorMessageVisible ?
 
     return (
         <section className="newInfo">
-            <h3 className="newInfo__title">{title}</h3>
+            <h3 className="newInfo__title">{state.title}</h3>
             {errorMessage}
             <form onSubmit={handleSubmit}>
                 <section>
