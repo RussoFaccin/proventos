@@ -31,6 +31,7 @@ const NewInfo = ({title, saveAction, cancelAction, infoKey}) => {
         }
 
         saveAction(formData);
+        cancelAction();
     }
 
     const handleCancel = (evt) => {

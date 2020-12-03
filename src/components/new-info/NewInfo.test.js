@@ -50,7 +50,7 @@ describe('<NewInfo/>', () => {
         expect(screen.queryByTitle(/Message Box/i)).toBeNull();
     });
 
-    test('It should return field values', () => {
+    test('It should return field values and close window', () => {
         render(<NewInfo title="Proventos" saveAction={saveAction} cancelAction={cancelAction} infoKey="proventos" />);
 
         fireEvent.change(screen.getByLabelText(/data/i), { target: { value: '2020-10-05' } });
@@ -61,6 +61,7 @@ describe('<NewInfo/>', () => {
         
         expect(actionReturn.date).toBe('2020-10-05');
         expect(actionReturn.value).toBe('450.65');
+        expect(cancelAction).toBeCalled();
     });
 
     test('It should return "proventos" property', () => {
