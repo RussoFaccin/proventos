@@ -9,15 +9,15 @@ describe('OrderEntity', () => {
     it('Should have default properties', () => {
         const order = new OrderEntity();
 
-        expect(order.date.toLocaleDateString('pt-br')).toEqual(new Date().toLocaleDateString('pt-br'));
-        expect(order.value).toBe(0);
+        expect(order.dateString).toEqual(new Date().toLocaleDateString('pt-br'));
+        expect(order.valueString).toBe('0');
     });
 
     it('Should have defined properties', () => {
         const dateValue = '2020-10-06';
         const order = new OrderEntity(dateValue, 10.05);
 
-        expect(order.date.toLocaleDateString('pt-br')).toBe(new Date(`${dateValue}T00:00:00`).toLocaleDateString('pt-br'));
-        expect(order.value).toBe(10.05);
+        expect(order.dateString).toBe(new Date(`${dateValue}T00:00:00`).toLocaleDateString('pt-br'));
+        expect(order.valueString).toBe('10,05');
     });
 })
