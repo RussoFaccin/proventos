@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { instanceOf } from 'prop-types';
 // Models
 import { OrderEntity } from '../../../models/OrderEntity';
 
@@ -21,7 +21,7 @@ const OrderList = ({ listEntry = [] }) => {
 }
 
 OrderList.propTypes = {
-    listEntry: PropTypes.arrayOf(OrderEntity)
+    listEntry: PropTypes.arrayOf(instanceOf(OrderEntity))
 }
 
 export default OrderList;
