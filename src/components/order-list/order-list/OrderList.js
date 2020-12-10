@@ -7,7 +7,6 @@ import { ListFilter } from '../../../utils/ListFilter';
 
 const OrderList = ({ listEntry = [] }) => {
     const orderedList = ListFilter.sortByDate(listEntry);
-    console.log(orderedList);
     let renderList = orderedList.map((entry, index) => {
         return (
             <li className="orderList__row" key={`listKey_${index}`}>

@@ -46,7 +46,6 @@ const App = () => {
   }
 
   function saveData(infoData) {
-    console.log('saveData', infoData);
 
     setState({
       ...appState,
