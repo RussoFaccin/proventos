@@ -1,24 +1,25 @@
+import { OrderEntity } from '../models/OrderEntity';
+
 export class ListFilter {
     /**
      * 
-     * @param {any[]} listToFilter
-     * @param {String} key Date key
-     * @param {String} order asc || desc
+     * @param {Array<OrderEntity>} listToFilter
+     * @param {string} key Date key
+     * @param {string} order asc || desc
      */
-    static filterByDate(listToFilter, key = 'date', order = 'asc') {
+    static sortByDate(listToFilter, order = 'asc') {
         const tmpList = listToFilter.sort((a, b) => {
-            const dateA = new Date(`${a[key]}T00:00:00`);
-            const dateB = new Date(`${b[key]}T00:00:00`);
-
-            if (dateA > dateB) {
+            if (a.date > b.date) {
                 return 1;
-            } else if (dateA < dateB) {
+            } else if (a.date < b.date) {
                 return -1
             } else {
                 return 0;
             }
         });
 
-        return tmpList;
+        return order === 'asc' ?
+            tmpList :
+            tmpList.reverse();
     }
 }
