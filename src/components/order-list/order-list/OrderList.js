@@ -2,9 +2,13 @@ import React from 'react';
 import PropTypes, { instanceOf } from 'prop-types';
 // Models
 import { OrderEntity } from '../../../models/OrderEntity';
+// Utils
+import { ListFilter } from '../../../utils/ListFilter';
 
 const OrderList = ({ listEntry = [] }) => {
-    let renderList = listEntry.map((entry, index) => {
+    const orderedList = ListFilter.sortByDate(listEntry);
+    console.log(orderedList);
+    let renderList = orderedList.map((entry, index) => {
         return (
             <li className="orderList__row" key={`listKey_${index}`}>
                 <div className="orderList__rowItem">{entry.dateString}</div>
