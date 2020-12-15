@@ -5,11 +5,21 @@ import { OrderEntity } from '../../../models/OrderEntity';
 // Utils
 import { ListFilter } from '../../../utils/ListFilter';
 
-const OrderList = ({ listEntry = [] }) => {
+/**
+ * <OrderList /> Component
+ * @param {Array<OrderEntity>} props.listEntry
+ * @param {Function} actionSelect
+ */
+const OrderList = ({ listEntry, actionSelect }) => {
     const orderedList = ListFilter.sortByDate(listEntry);
+    // Methods
+    const onSelect = (order) => {
+        actionSelect();
+    };
+
     let renderList = orderedList.map((entry, index) => {
         return (
-            <li className="orderList__row" key={`listKey_${index}`}>
+            <li className="orderList__row" key={`listKey_${index}`} onClick={() => onSelect(entry)}>
                 <div className="orderList__rowItem">{entry.dateString}</div>
                 <div className="orderList__rowItem">{entry.valueString}</div>
             </li>
@@ -24,7 +34,8 @@ const OrderList = ({ listEntry = [] }) => {
 }
 
 OrderList.propTypes = {
-    listEntry: PropTypes.arrayOf(instanceOf(OrderEntity))
+    listEntry: PropTypes.arrayOf(instanceOf(OrderEntity)),
+    actionSelect: PropTypes.func
 }
 
 export default OrderList;
