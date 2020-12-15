@@ -1,11 +1,12 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 // Component
 import OrderList from './OrderList.js';
 // Models
 import { OrderEntity } from '../../../models/OrderEntity';
 
 describe('OrderList component', () => {
+    const actionSelect = jest.fn();
     // Mock data
     const mockList = [
         new OrderEntity('2020-01-20', 10),
@@ -30,7 +31,7 @@ describe('OrderList component', () => {
     });
 
     it('Should render the component', () => {
-        render(<OrderList />);
+        render(<OrderList listEntry={mockList} actionSelect={actionSelect} />);
     });
 
     it('Should render the list sorted by date', () => {
@@ -44,5 +45,15 @@ describe('OrderList component', () => {
             expect(listItemList[index].innerHTML).toMatch(new RegExp(`${item.dateString}`, 'i'));
             expect(listItemList[index].innerHTML).toMatch(new RegExp(`${item.dateString}`, 'i'));
         });
+    });
+
+    it('Should fire actionSelect', () => {
+        const { container } = render(<OrderList listEntry={mockList} actionSelect={actionSelect} />);
+
+        const listItemList = container.querySelectorAll('.orderList__row');
+
+        fireEvent.click(listItemList[0]);
+
+        expect(actionSelect).toBeCalled();
     });
 });
