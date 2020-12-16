@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes, { instanceOf } from 'prop-types';
 // Models
-import { OrderEntity } from '../../../models/OrderEntity';
+import { OrderEntity } from '../../models/OrderEntity';
 // Utils
-import { ListFilter } from '../../../utils/ListFilter';
+import { ListFilter } from '../../utils/ListFilter';
 
 /**
  * <OrderList /> Component

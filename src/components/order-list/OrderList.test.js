@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 // Component
-import OrderList from './OrderList.js';
+import OrderList from '../order-list/OrderList';
 // Models
-import { OrderEntity } from '../../../models/OrderEntity';
+import { OrderEntity } from '../../models/OrderEntity';
 
 describe('OrderList component', () => {
     const actionSelect = jest.fn();
