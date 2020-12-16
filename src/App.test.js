@@ -59,7 +59,7 @@ describe('<App />', () => {
     render(<App />);
 
     // Open <Newinfo />
-    fireEvent.click(screen.getByRole('button', {name: /aporte/i}));
+    fireEvent.click(screen.getByRole('button', {name: /provento/i}));
 
     // Fill form
     fireEvent.change(screen.getByLabelText(/data/i), { target: { value: '2020-10-05' } });
