@@ -3,6 +3,7 @@ import './App.css';
 
 // Components
 import NewInfo from './components/new-info/NewInfo.component';
+import OrderList from './components/order-list/OrderList';
 
 const App = () => {
   const [appState, setState] = useState({
@@ -78,8 +79,9 @@ const App = () => {
         </nav>
       </header>
       <main className="appContent">
-        {newInfoModal}
+        <OrderList />
       </main>
+      {newInfoModal}
     </>
   );
 }
