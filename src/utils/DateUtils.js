@@ -7,4 +7,12 @@ export class DateUtils {
         
         return `${year}-${month}-${day}`;
     }
+    /**
+     * 
+     * @param {string} dateLocale 
+     */
+    static formatLocaleDate(dateLocale) {
+        const dateParts = dateLocale.split('/');
+        return `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+    }
 }
