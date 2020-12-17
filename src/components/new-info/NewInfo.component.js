@@ -7,17 +7,29 @@ export const ERROR_MESSAGES = {
     EMPTY_FIELDS: 'Todos os campos são obrigatórios'
 };
 
-const NewInfo = ({title, saveAction, cancelAction, infoKey}) => {
+const NewInfo = ({order, title, saveAction, cancelAction, infoKey}) => {
     const [state, setState] = useState({
         isErrorMessageVisible: false,
         errorMessage: ERROR_MESSAGES.EMPTY_FIELDS
     });
 
-    const [formData, setFormData] = useState({
-        date: DateUtils.getTodayFormated(),
-        value: '',
-        infoKey: infoKey
-    });
+    let defaultFormData;
+
+    if (!order) {
+        defaultFormData = {
+            date: DateUtils.getTodayFormated(),
+            value: '',
+            infoKey: infoKey
+        }
+    } else {
+        defaultFormData = {
+            date: order.dateString,
+            value: order.value,
+            infoKey: order.type
+        }
+    }
+
+    const [formData, setFormData] = useState(defaultFormData);
 
     useEffect(() => {
         setState({
@@ -110,6 +122,7 @@ const errorMessage = state.isErrorMessageVisible ?
 }
 
 NewInfo.propTypes = {
+    order: PropTypes.instanceOf(OrderEntity),
     title: PropTypes.string,
     saveAction: PropTypes.func.isRequired,
     cancelAction: PropTypes.func.isRequired,
