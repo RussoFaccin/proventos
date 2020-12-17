@@ -50,10 +50,16 @@ const App = () => {
   }
 
   function saveData(infoData) {
+    const dataList = appState.data[infoData.type];
+    dataList.push(infoData);
+
     setState({
       ...appState,
       newInfo: {
         isVisible: false
+      },
+      data: {
+        [infoData.type]: dataList
       }
     })
   }
