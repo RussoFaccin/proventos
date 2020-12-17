@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import { DateUtils } from '../../utils/DateUtils';
+import { OrderEntity } from "../../models/OrderEntity";
 
 export const ERROR_MESSAGES = {
     EMPTY_FIELDS: 'Todos os campos são obrigatórios'
@@ -42,7 +43,13 @@ const NewInfo = ({title, saveAction, cancelAction, infoKey}) => {
             return false;
         }
 
-        saveAction(formData);
+        const order = new OrderEntity(
+            formData.date,
+            formData.value,
+            formData.infoKey
+        );
+
+        saveAction(order);
         cancelAction();
     }
 
