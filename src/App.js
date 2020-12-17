@@ -15,7 +15,8 @@ const App = () => {
     newInfo: {
       isVisible: false,
       infoKey: '',
-      infoTitle: ''
+      infoTitle: '',
+      selectedData: null
     },
 
     data: {
@@ -64,12 +65,31 @@ const App = () => {
     })
   }
 
+  function selectItem(item) {
+    /*
+    isVisible: false,
+      infoKey: '',
+      infoTitle: '',
+      selectedData: null
+    */
+    setState({
+      ...appState,
+      newInfo: {
+        isVisible: true,
+        infoKey: item.type,
+        infoTitle: item.type,
+        selectedData: item
+      }
+    })
+  }
+
   useEffect(() => {
     document.title = appState.title;
   });
 
   const newInfoModal = appState.newInfo.isVisible ?
     <NewInfo
+      order={appState.newInfo.selectedData}
       title={appState.newInfo.infoTitle}
       infoKey={appState.newInfo.infoKey}
       saveAction={saveData}
@@ -87,7 +107,7 @@ const App = () => {
         </nav>
       </header>
       <main className="appContent">
-        <OrderList listEntry={appState.data.proventos} />
+        <OrderList listEntry={appState.data.proventos} actionSelect={selectItem} />
       </main>
       {newInfoModal}
     </>
