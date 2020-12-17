@@ -134,13 +134,13 @@ describe('<NewInfo/>', () => {
     it('Should receive OrderEntity instance and fill form with values', () => {
         const order = new OrderEntity('2020-10-05', 147.45);
         render(<NewInfo title="Aportes" order={order} saveAction={saveAction} cancelAction={cancelAction} infoKey="aportes" />);
-        screen.debug();
+
         const dateField = screen.getByLabelText(/data/i).value;
         const valueField = screen.getByRole('textbox', {
             name: /value/i
         }).value;
 
         expect(dateField).toBe('2020-10-05');
-        expect(valueField).toBe(147.45);
+        expect(valueField).toBe('147.45');
     });
 });

@@ -23,7 +23,7 @@ const NewInfo = ({order, title, saveAction, cancelAction, infoKey}) => {
         }
     } else {
         defaultFormData = {
-            date: order.dateString,
+            date: DateUtils.formatLocaleDate(order.dateString),
             value: order.value,
             infoKey: order.type
         }
