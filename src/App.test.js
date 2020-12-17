@@ -54,4 +54,20 @@ describe('<App />', () => {
 
     expect(result).toBeNull();
   });
+
+  it('Should add a item to list', () => {
+    render(<App />);
+
+    // Open <Newinfo />
+    fireEvent.click(screen.getByRole('button', {name: /provento/i}));
+
+    // Fill form
+    fireEvent.change(screen.getByLabelText(/data/i), { target: { value: '2020-10-05' } });
+    fireEvent.change(screen.getByRole('textbox', {name: /value/i}), { target: { value: '450.65' } });
+
+    // Save action
+    fireEvent.click(screen.getByRole('button', {name: /salvar/i}));
+
+    screen.getByText('05/10/2020');
+  });
 })

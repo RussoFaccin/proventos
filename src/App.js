@@ -3,6 +3,10 @@ import './App.css';
 
 // Components
 import NewInfo from './components/new-info/NewInfo.component';
+import OrderList from './components/order-list/OrderList';
+
+// Models
+import { OrderEntity } from './models/OrderEntity';
 
 const App = () => {
   const [appState, setState] = useState({
@@ -15,7 +19,7 @@ const App = () => {
     },
 
     data: {
-      Proventos: [],
+      proventos: [],
       aportes: []
     }
   });
@@ -46,11 +50,16 @@ const App = () => {
   }
 
   function saveData(infoData) {
+    const dataList = appState.data[infoData.type];
+    dataList.push(infoData);
 
     setState({
       ...appState,
       newInfo: {
         isVisible: false
+      },
+      data: {
+        [infoData.type]: dataList
       }
     })
   }
@@ -78,8 +87,9 @@ const App = () => {
         </nav>
       </header>
       <main className="appContent">
-        {newInfoModal}
+        <OrderList listEntry={appState.data.proventos} />
       </main>
+      {newInfoModal}
     </>
   );
 }
