@@ -70,4 +70,27 @@ describe('<App />', () => {
 
     screen.getByText('05/10/2020');
   });
+
+  it('Should open new info with values', () => {
+    const view = render(<App />);
+
+    // Open <Newinfo />
+    fireEvent.click(screen.getByRole('button', {name: /provento/i}));
+
+    // Fill form
+    fireEvent.change(screen.getByLabelText(/data/i), { target: { value: '2010-06-10' } });
+    fireEvent.change(screen.getByRole('textbox', {name: /value/i}), { target: { value: '450.65' } });
+
+    // Save
+    fireEvent.click(screen.getByRole('button', {name: /salvar/i}));
+
+    const element = view.container.querySelector('.orderList__row');
+    fireEvent.click(element);
+
+    const dateField = screen.getByLabelText(/data/i).value;
+    const valueField = screen.getByLabelText(/value/i).value;
+    
+    expect(dateField).toBe('2010-06-10');
+    expect(valueField).toBe('450.65');
+  });
 })

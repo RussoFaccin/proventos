@@ -14,7 +14,7 @@ const OrderList = ({ listEntry, actionSelect }) => {
     const orderedList = ListFilter.sortByDate(listEntry);
     // Methods
     const onSelect = (order) => {
-        actionSelect();
+        actionSelect(order);
     };
 
     let renderList = orderedList.map((entry, index) => {

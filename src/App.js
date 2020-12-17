@@ -5,8 +5,8 @@ import './App.css';
 import NewInfo from './components/new-info/NewInfo.component';
 import OrderList from './components/order-list/OrderList';
 
-// Models
-import { OrderEntity } from './models/OrderEntity';
+// Utils
+import { StringUtils } from './utils/StringUtils';
 
 const App = () => {
   const [appState, setState] = useState({
@@ -15,7 +15,8 @@ const App = () => {
     newInfo: {
       isVisible: false,
       infoKey: '',
-      infoTitle: ''
+      infoTitle: '',
+      selectedData: null
     },
 
     data: {
@@ -64,12 +65,25 @@ const App = () => {
     })
   }
 
+  function selectItem(item) {
+    setState({
+      ...appState,
+      newInfo: {
+        isVisible: true,
+        infoKey: item.type,
+        infoTitle: StringUtils.capitalize(item.type),
+        selectedData: item
+      }
+    })
+  }
+
   useEffect(() => {
     document.title = appState.title;
   });
 
   const newInfoModal = appState.newInfo.isVisible ?
     <NewInfo
+      order={appState.newInfo.selectedData}
       title={appState.newInfo.infoTitle}
       infoKey={appState.newInfo.infoKey}
       saveAction={saveData}
@@ -87,7 +101,7 @@ const App = () => {
         </nav>
       </header>
       <main className="appContent">
-        <OrderList listEntry={appState.data.proventos} />
+        <OrderList listEntry={appState.data.proventos} actionSelect={selectItem} />
       </main>
       {newInfoModal}
     </>
