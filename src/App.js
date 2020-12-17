@@ -5,8 +5,8 @@ import './App.css';
 import NewInfo from './components/new-info/NewInfo.component';
 import OrderList from './components/order-list/OrderList';
 
-// Models
-import { OrderEntity } from './models/OrderEntity';
+// Utils
+import { StringUtils } from './utils/StringUtils';
 
 const App = () => {
   const [appState, setState] = useState({
@@ -66,18 +66,12 @@ const App = () => {
   }
 
   function selectItem(item) {
-    /*
-    isVisible: false,
-      infoKey: '',
-      infoTitle: '',
-      selectedData: null
-    */
     setState({
       ...appState,
       newInfo: {
         isVisible: true,
         infoKey: item.type,
-        infoTitle: item.type,
+        infoTitle: StringUtils.capitalize(item.type),
         selectedData: item
       }
     })
