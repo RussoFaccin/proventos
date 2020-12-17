@@ -1,6 +1,8 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react'
 import NewInfo, { ERROR_MESSAGES } from './NewInfo.component';
+// Models
+import { OrderEntity } from '../../models/OrderEntity';
 
 describe('<NewInfo/>', () => {    
     const saveAction = jest.fn();
@@ -59,7 +61,7 @@ describe('<NewInfo/>', () => {
         fireEvent.click(screen.getByRole('button', {name: /salvar/i}));
         const actionReturn = saveAction.mock.calls[0][0];
         
-        expect(actionReturn.date).toBe('2020-10-05');
+        expect(actionReturn.dateString).toBe('05/10/2020');
         expect(actionReturn.value).toBe('450.65');
         expect(cancelAction).toBeCalled();
     });
@@ -74,7 +76,7 @@ describe('<NewInfo/>', () => {
         fireEvent.click(screen.getByRole('button', {name: /salvar/i}));
         actionReturn = saveAction.mock.calls[0][0];
         
-        expect(actionReturn.infoKey).toBe('proventos');
+        expect(actionReturn.type).toBe('proventos');
     });
 
     it('It should return "aportes" property', () => {
@@ -87,7 +89,20 @@ describe('<NewInfo/>', () => {
         fireEvent.click(screen.getByRole('button', {name: /salvar/i}));
         actionReturn = saveAction.mock.calls[0][0];
         
-        expect(actionReturn.infoKey).toBe('aportes');
+        expect(actionReturn.type).toBe('aportes');
+    });
+
+    it('It should return OrderEntity instance', () => {
+        let actionReturn;
+        render(<NewInfo title="Aportes" saveAction={saveAction} cancelAction={cancelAction} infoKey="aportes" />);
+        
+        fireEvent.change(screen.getByLabelText(/data/i), { target: { value: '2020-10-05' } });
+        fireEvent.change(screen.getByRole('textbox', {name: /value/i}), { target: { value: '450.65' } });
+
+        fireEvent.click(screen.getByRole('button', {name: /salvar/i}));
+        actionReturn = saveAction.mock.calls[0][0];
+        
+        expect(actionReturn).toBeInstanceOf(OrderEntity);
     });
 
     it('It should update the component', () => {
@@ -102,7 +117,7 @@ describe('<NewInfo/>', () => {
         fireEvent.click(screen.getByRole('button', {name: /salvar/i}));
         const actionReturn = saveAction.mock.calls[0][0];
         
-        expect(actionReturn.infoKey).toBe('aportes');
+        expect(actionReturn.type).toBe('aportes');
     });
 
     it('Should fire cancel event', () => {
