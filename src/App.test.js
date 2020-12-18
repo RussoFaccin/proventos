@@ -93,4 +93,30 @@ describe('<App />', () => {
     expect(dateField).toBe('2010-06-10');
     expect(valueField).toBe('450.65');
   });
+
+  it('Should update item on save', async () => {
+    render(<App />);
+
+    // Open <Newinfo />
+    fireEvent.click(screen.getByRole('button', {name: /provento/i}));
+
+    // Fill form
+    fireEvent.change(screen.getByLabelText(/data/i), { target: { value: '2010-06-10' } });
+    fireEvent.change(screen.getByRole('textbox', {name: /value/i}), { target: { value: '450.65' } });
+
+    // Save
+    fireEvent.click(screen.getByRole('button', {name: /salvar/i}));
+    
+    // Select item
+    fireEvent.click(screen.getByText('10/06/2010'));
+
+    // Fill form
+    fireEvent.change(screen.getByLabelText(/data/i), { target: { value: '2020-12-18' } });
+
+    // Save
+    fireEvent.click(screen.getByRole('button', {name: /salvar/i}));
+
+    screen.debug();
+    expect(screen.queryAllByText('10/06/2010')).toBeFalsy();
+  });
 })
