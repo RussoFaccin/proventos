@@ -9,21 +9,22 @@ describe('OrderList component', () => {
     const actionSelect = jest.fn();
     // Mock data
     const mockList = [
-        new OrderEntity('2020-01-20', 10),
-        new OrderEntity('2020-02-01', 100.45),
-        new OrderEntity('2020-02-20', 66.5),
-        new OrderEntity('2020-03-15', 20),
-        new OrderEntity('2020-01-20'),
-        new OrderEntity('2020-02-14', 74.45),
+        new OrderEntity(null, '2020-01-20', 10),
+        new OrderEntity(null, '2020-02-01', 100.45),
+        new OrderEntity(null, '2020-02-20', 66.5),
+        new OrderEntity(null, '2020-03-15', 20),
+        new OrderEntity(null, '2020-01-20'),
+        new OrderEntity(null, '2020-02-14', 74.45),
     ];
 
     const expectList = [
-        new OrderEntity('2020-01-20', 10),
-        new OrderEntity('2020-01-20'),
-        new OrderEntity('2020-02-01', 100.45),
-        new OrderEntity('2020-02-14', 74.45),
-        new OrderEntity('2020-02-20', 66.5),
-        new OrderEntity('2020-03-15', 20),
+        mockList[0],
+        mockList[4],
+        mockList[1],
+        mockList[5],
+        mockList[2],
+        mockList[3],
+        
     ];
 
     it('Should exist', () => {

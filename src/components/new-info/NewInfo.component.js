@@ -55,13 +55,18 @@ const NewInfo = ({order, title, saveAction, cancelAction, infoKey}) => {
             return false;
         }
 
-        const order = new OrderEntity(
+        let orderReturn = new OrderEntity(
+            null,
             formData.date,
             formData.value,
             formData.infoKey
         );
 
-        saveAction(order);
+        if (order) {
+            orderReturn.id = order.id;
+        }
+
+        saveAction(orderReturn);
         cancelAction();
     }
 
