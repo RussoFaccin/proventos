@@ -52,7 +52,16 @@ const App = () => {
 
   function saveData(infoData) {
     const dataList = appState.data[infoData.type];
-    dataList.push(infoData);
+    
+    const found = dataList.findIndex((entry) => {
+      return entry.id === infoData.id
+    });
+
+    if (found === -1) {
+      dataList.push(infoData);
+    } else {
+      dataList.splice(found, 1, infoData)
+    }
 
     setState({
       ...appState,

@@ -116,7 +116,6 @@ describe('<App />', () => {
     // Save
     fireEvent.click(screen.getByRole('button', {name: /salvar/i}));
 
-    screen.debug();
-    expect(screen.queryAllByText('10/06/2010')).toBeFalsy();
+    expect(screen.queryByText('10/06/2010')).toBeFalsy();
   });
 })
