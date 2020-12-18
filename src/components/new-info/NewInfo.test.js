@@ -66,9 +66,9 @@ describe('<NewInfo/>', () => {
         expect(cancelAction).toBeCalled();
     });
 
-    it('It should return "proventos" property', () => {
+    it('It should return "provento" property', () => {
         let actionReturn;
-        render(<NewInfo title="Proventos" saveAction={saveAction} cancelAction={cancelAction} infoKey="proventos" />);
+        render(<NewInfo title="Proventos" saveAction={saveAction} cancelAction={cancelAction} infoKey="provento" />);
 
         fireEvent.change(screen.getByLabelText(/data/i), { target: { value: '2020-10-05' } });
         fireEvent.change(screen.getByRole('textbox', { name: /value/i }), { target: { value: '450.65' } });
@@ -76,12 +76,12 @@ describe('<NewInfo/>', () => {
         fireEvent.click(screen.getByRole('button', { name: /salvar/i }));
         actionReturn = saveAction.mock.calls[0][0];
 
-        expect(actionReturn.type).toBe('proventos');
+        expect(actionReturn.type).toBe('provento');
     });
 
-    it('It should return "aportes" property', () => {
+    it('It should return "aporte" property', () => {
         let actionReturn;
-        render(<NewInfo title="Aportes" saveAction={saveAction} cancelAction={cancelAction} infoKey="aportes" />);
+        render(<NewInfo title="Aportes" saveAction={saveAction} cancelAction={cancelAction} infoKey="aporte" />);
 
         fireEvent.change(screen.getByLabelText(/data/i), { target: { value: '2020-10-05' } });
         fireEvent.change(screen.getByRole('textbox', { name: /value/i }), { target: { value: '450.65' } });
@@ -89,7 +89,7 @@ describe('<NewInfo/>', () => {
         fireEvent.click(screen.getByRole('button', { name: /salvar/i }));
         actionReturn = saveAction.mock.calls[0][0];
 
-        expect(actionReturn.type).toBe('aportes');
+        expect(actionReturn.type).toBe('aporte');
     });
 
     it('It should return OrderEntity instance', () => {
@@ -132,7 +132,7 @@ describe('<NewInfo/>', () => {
     });
 
     it('Should receive OrderEntity instance and fill form with values', () => {
-        const order = new OrderEntity('2020-10-05', 147.45);
+        const order = new OrderEntity(null, '2020-10-05', 147.45);
         render(<NewInfo title="Aportes" order={order} saveAction={saveAction} cancelAction={cancelAction} infoKey="aportes" />);
 
         const dateField = screen.getByLabelText(/data/i).value;
