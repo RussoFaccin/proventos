@@ -8,7 +8,7 @@ import { OrderEntity } from '../../models/OrderEntity';
 describe('OrderList component', () => {
     const actionSelect = jest.fn();
     const actionDelete = jest.fn();
-
+    
     // Mock data
     const mockList = [
         new OrderEntity(null, '2020-01-20', 10),
