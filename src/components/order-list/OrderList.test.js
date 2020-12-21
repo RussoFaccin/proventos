@@ -7,6 +7,8 @@ import { OrderEntity } from '../../models/OrderEntity';
 
 describe('OrderList component', () => {
     const actionSelect = jest.fn();
+    const actionDelete = jest.fn();
+    
     // Mock data
     const mockList = [
         new OrderEntity(null, '2020-01-20', 10),
@@ -48,10 +50,17 @@ describe('OrderList component', () => {
         });
     });
 
+    it('Should have "Delete" and "Edit" buttons', () => {
+        render(<OrderList listEntry={mockList} />);
+
+        screen.getAllByRole('button', {name: /edit/i});
+        screen.getAllByRole('button', {name: /delete/i});
+    });
+
     it('Should fire actionSelect', () => {
         const { container } = render(<OrderList listEntry={mockList} actionSelect={actionSelect} />);
 
-        const listItemList = container.querySelectorAll('.orderList__row');
+        const listItemList = screen.getAllByRole('button', {name: /edit/i});
 
         fireEvent.click(listItemList[0]);
 
