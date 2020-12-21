@@ -86,6 +86,27 @@ const App = () => {
     })
   }
 
+  function deleteItem(item) {
+    const dataList = appState.data[item.type];
+    
+    const found = dataList.findIndex((entry) => {
+      return entry.id === item.id;
+    });
+
+    if (found === -1) {
+      return false;
+    }
+
+    dataList.splice(found, 1);
+
+    setState({
+      ...appState,
+      data: {
+        [item.type]: dataList
+      }
+    })
+  }
+
   useEffect(() => {
     document.title = appState.title;
   });
@@ -110,7 +131,7 @@ const App = () => {
         </nav>
       </header>
       <main className="appContent">
-        <OrderList listEntry={appState.data.proventos} actionSelect={selectItem} />
+        <OrderList listEntry={appState.data.proventos} actionSelect={selectItem} actionDelete={deleteItem} />
       </main>
       {newInfoModal}
     </>

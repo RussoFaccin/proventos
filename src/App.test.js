@@ -84,7 +84,7 @@ describe('<App />', () => {
     // Save
     fireEvent.click(screen.getByRole('button', {name: /salvar/i}));
 
-    const element = view.container.querySelector('.orderList__row');
+    const element = screen.queryByRole('button', {name: /edit/i})
     fireEvent.click(element);
 
     const dateField = screen.getByLabelText(/data/i).value;
@@ -108,7 +108,7 @@ describe('<App />', () => {
     fireEvent.click(screen.getByRole('button', {name: /salvar/i}));
     
     // Select item
-    fireEvent.click(screen.getByText('10/06/2010'));
+    fireEvent.click(screen.getByRole('button', {name: /edit/i}));
 
     // Fill form
     fireEvent.change(screen.getByLabelText(/data/i), { target: { value: '2020-12-18' } });
@@ -119,7 +119,7 @@ describe('<App />', () => {
     expect(screen.queryByText('10/06/2010')).toBeFalsy();
   });
 
-  it('Should delete item on save', () => {
+  it('Should delete item', () => {
     render(<App />);
 
     // Open <Newinfo />
