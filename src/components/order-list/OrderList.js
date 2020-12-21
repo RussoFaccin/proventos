@@ -19,6 +19,10 @@ const OrderList = ({ listEntry, actionSelect, actionDelete }) => {
 
         actionSelect(order);
     };
+
+    const onDelete = (order) => {
+        actionDelete(order);
+    };
     
     // Render
     let renderList = orderedList.map((entry, index) => {
@@ -46,7 +50,7 @@ const OrderList = ({ listEntry, actionSelect, actionDelete }) => {
 OrderList.propTypes = {
     listEntry: PropTypes.arrayOf(instanceOf(OrderEntity)),
     actionSelect: PropTypes.func,
-    actionDelete: PropTypes.func
+    actionDelete: PropTypes.func,
 }
 
 export default OrderList;

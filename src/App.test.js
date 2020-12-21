@@ -118,4 +118,23 @@ describe('<App />', () => {
 
     expect(screen.queryByText('10/06/2010')).toBeFalsy();
   });
+
+  it('Should delete item on save', () => {
+    render(<App />);
+
+    // Open <Newinfo />
+    fireEvent.click(screen.getByRole('button', {name: /provento/i}));
+
+    // Fill form
+    fireEvent.change(screen.getByLabelText(/data/i), { target: { value: '2010-06-10' } });
+    fireEvent.change(screen.getByRole('textbox', {name: /value/i}), { target: { value: '450.65' } });
+
+    // Save
+    fireEvent.click(screen.getByRole('button', {name: /salvar/i}));
+
+    // Delete item
+    fireEvent.click(screen.getByRole('button', {name: /delete/i}));
+
+    expect(screen.queryByText('10/06/2010')).toBeFalsy();
+  });
 })
