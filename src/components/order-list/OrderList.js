@@ -14,21 +14,28 @@ const OrderList = ({ listEntry, actionSelect, actionDelete }) => {
     const orderedList = ListFilter.sortByDate(listEntry);
     
     // Methods
-    const onSelect = (order) => {
+    const onSelect = (order, evt) => {
+        evt.preventDefault();
+
         actionSelect(order);
     };
 
     const onDelete = (order) => {
         actionDelete(order);
     };
-
+    
     // Render
     let renderList = orderedList.map((entry, index) => {
         return (
-            <li className="orderList__row" key={`listKey_${index}`} onClick={() => onSelect(entry)}>
+            <li className="orderList__row" key={`listKey_${index}`}>
                 <div className="orderList__rowItem">{entry.dateString}</div>
                 <div className="orderList__rowItem">{entry.valueString}</div>
-                <div className="orderList__rowItem"><button className="prvButton" onClick={() => onDelete(entry)}>Delete</button></div>
+                <button className="prvButton" onClick={(evt) => onSelect(entry, evt)}>
+                    <span className="srOnly">Edit</span>
+                </button>
+                <button className="prvButton" onClick={(evt) => onDelete(entry, evt)}>
+                    <span className="srOnly">Delete</span>
+                </button>
             </li>
         );
     });

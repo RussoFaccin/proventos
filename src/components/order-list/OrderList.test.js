@@ -58,10 +58,17 @@ describe('OrderList component', () => {
         });
     });
 
+    it('Should have "Delete" and "Edit" buttons', () => {
+        render(<OrderList listEntry={mockList} />);
+
+        screen.getAllByRole('button', {name: /edit/i});
+        screen.getAllByRole('button', {name: /delete/i});
+    });
+
     it('Should fire actionSelect', () => {
         const { container } = render(<OrderList listEntry={mockList} actionSelect={actionSelect} actionDelete={actionDelete} />);
 
-        const listItemList = container.querySelectorAll('.orderList__row');
+        const listItemList = screen.getAllByRole('button', {name: /edit/i});
 
         fireEvent.click(listItemList[0]);
 
