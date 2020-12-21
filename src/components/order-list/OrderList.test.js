@@ -7,6 +7,8 @@ import { OrderEntity } from '../../models/OrderEntity';
 
 describe('OrderList component', () => {
     const actionSelect = jest.fn();
+    const actionDelete = jest.fn();
+
     // Mock data
     const mockList = [
         new OrderEntity(null, '2020-01-20', 10),
@@ -32,11 +34,19 @@ describe('OrderList component', () => {
     });
 
     it('Should render the component', () => {
-        render(<OrderList listEntry={mockList} actionSelect={actionSelect} />);
+        render(<OrderList listEntry={mockList} actionSelect={actionSelect} actionDelete={actionDelete} />);
+    });
+    
+    it('Should have delete button on each element', () => {
+        render(<OrderList listEntry={mockList} actionSelect={actionSelect} actionDelete={actionDelete} />);
+
+        const elementList = screen.queryAllByRole('button', {name: /delete/i});
+
+        expect(elementList.length).toBe(mockList.length);
     });
 
     it('Should render the list sorted by date', () => {
-        const { container } = render(<OrderList listEntry={mockList} />);
+        const { container } = render(<OrderList listEntry={mockList} actionSelect={actionSelect} actionDelete={actionDelete} />);
 
         const listItemList = container.querySelectorAll('.orderList__row');
 
@@ -49,12 +59,22 @@ describe('OrderList component', () => {
     });
 
     it('Should fire actionSelect', () => {
-        const { container } = render(<OrderList listEntry={mockList} actionSelect={actionSelect} />);
+        const { container } = render(<OrderList listEntry={mockList} actionSelect={actionSelect} actionDelete={actionDelete} />);
 
         const listItemList = container.querySelectorAll('.orderList__row');
 
         fireEvent.click(listItemList[0]);
 
         expect(actionSelect).toBeCalled();
+    });
+
+    it('Should fire actionDelete', () => {
+        render(<OrderList listEntry={mockList} actionSelect={actionSelect} actionDelete={actionDelete} />);
+
+        const deleteButtonList = screen.getAllByRole('button', {name: /delete/i});
+
+        fireEvent.click(deleteButtonList[0]);
+
+        expect(actionDelete).toBeCalled();
     });
 });
