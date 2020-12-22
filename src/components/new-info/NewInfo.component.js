@@ -1,22 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import { DateUtils } from '../../utils/DateUtils';
+import { OrderEntity } from "../../models/OrderEntity";
 
 export const ERROR_MESSAGES = {
     EMPTY_FIELDS: 'Todos os campos são obrigatórios'
 };
 
-const NewInfo = ({title, saveAction, cancelAction, infoKey}) => {
+const NewInfo = ({order, title, saveAction, cancelAction, infoKey}) => {
     const [state, setState] = useState({
         isErrorMessageVisible: false,
         errorMessage: ERROR_MESSAGES.EMPTY_FIELDS
     });
 
-    const [formData, setFormData] = useState({
-        date: '',
-        value: '',
-        infoKey: infoKey
-    });
+    let defaultFormData;
+
+    if (!order) {
+        defaultFormData = {
+            date: DateUtils.getTodayFormated(),
+            value: '',
+            infoKey: infoKey
+        }
+    } else {
+        defaultFormData = {
+            date: DateUtils.formatLocaleDate(order.dateString),
+            value: order.value,
+            infoKey: order.type
+        }
+    }
+
+    const [formData, setFormData] = useState(defaultFormData);
+
+    useEffect(() => {
+        setState({
+            ...state,
+            title: title
+        });
+
+        setFormData({
+            ...formData,
+            infoKey: infoKey
+        });
+    }, [title, infoKey])
 
     // Functions
     const handleSave = (evt) => {
@@ -30,7 +55,19 @@ const NewInfo = ({title, saveAction, cancelAction, infoKey}) => {
             return false;
         }
 
-        saveAction(formData);
+        let orderReturn = new OrderEntity(
+            null,
+            formData.date,
+            formData.value,
+            formData.infoKey
+        );
+
+        if (order) {
+            orderReturn.id = order.id;
+        }
+
+        saveAction(orderReturn);
+        cancelAction();
     }
 
     const handleCancel = (evt) => {
@@ -69,7 +106,7 @@ const errorMessage = state.isErrorMessageVisible ?
 
     return (
         <section className="newInfo">
-            <h3 className="newInfo__title">{title}</h3>
+            <h3 className="newInfo__title">{state.title}</h3>
             {errorMessage}
             <form onSubmit={handleSubmit}>
                 <section>
@@ -90,6 +127,7 @@ const errorMessage = state.isErrorMessageVisible ?
 }
 
 NewInfo.propTypes = {
+    order: PropTypes.instanceOf(OrderEntity),
     title: PropTypes.string,
     saveAction: PropTypes.func.isRequired,
     cancelAction: PropTypes.func.isRequired,

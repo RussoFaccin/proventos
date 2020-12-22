@@ -4,6 +4,10 @@ import './App.css';
 // Components
 import NewInfo from './components/new-info/NewInfo.component';
 import AppChart from './components/app-chart/AppChart.coomponent';
+import OrderList from './components/order-list/OrderList';
+
+// Utils
+import { StringUtils } from './utils/StringUtils';
 
 const App = () => {
   const [appState, setState] = useState({
@@ -12,11 +16,12 @@ const App = () => {
     newInfo: {
       isVisible: false,
       infoKey: '',
-      infoTitle: ''
+      infoTitle: '',
+      selectedData: null
     },
 
     data: {
-      Proventos: [],
+      proventos: [],
       aportes: []
     }
   });
@@ -47,12 +52,58 @@ const App = () => {
   }
 
   function saveData(infoData) {
-    console.log('saveData', infoData);
+    const dataList = appState.data[infoData.type];
+    
+    const found = dataList.findIndex((entry) => {
+      return entry.id === infoData.id
+    });
+
+    if (found === -1) {
+      dataList.push(infoData);
+    } else {
+      dataList.splice(found, 1, infoData)
+    }
 
     setState({
       ...appState,
       newInfo: {
         isVisible: false
+      },
+      data: {
+        [infoData.type]: dataList
+      }
+    })
+  }
+
+  function selectItem(item) {
+    setState({
+      ...appState,
+      newInfo: {
+        isVisible: true,
+        infoKey: item.type,
+        infoTitle: StringUtils.capitalize(item.type),
+        selectedData: item
+      }
+    })
+  }
+
+  function deleteItem(item) {
+    const dataList = appState.data[item.type];
+    
+    const found = dataList.findIndex((entry) => {
+      return entry.id === item.id;
+    });
+
+    if (found === -1) {
+      return false;
+    }
+
+    dataList.splice(found, 1);
+
+    setState({
+      ...appState,
+      data: {
+        [item.type]: dataList
       }
     })
   }
@@ -63,6 +114,7 @@ const App = () => {
 
   const newInfoModal = appState.newInfo.isVisible ?
     <NewInfo
+      order={appState.newInfo.selectedData}
       title={appState.newInfo.infoTitle}
       infoKey={appState.newInfo.infoKey}
       saveAction={saveData}
@@ -80,9 +132,10 @@ const App = () => {
         </nav>
       </header>
       <main className="appContent">
-        {newInfoModal}
         <AppChart />
+        <OrderList listEntry={appState.data.proventos} actionSelect={selectItem} actionDelete={deleteItem} />
       </main>
+      {newInfoModal}
     </>
   );
 }
