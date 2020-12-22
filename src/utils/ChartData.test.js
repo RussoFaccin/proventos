@@ -29,16 +29,36 @@ describe('ChartData', () => {
         expect(dataInYear2010.length).toBe(0);
     })
 
-    // it('Should create data structure given OrderEntity[]', () => {
-    
+    it('Should create data structure given OrderEntity[]', () => {
 
-    //     const formatedList = ChartData.createData(entryList, '2020');
+        /*
+        | ---------------------------------------------------------------------------
+        | Scenario 1
+        | ---------------------------------------------------------------------------
+        */
 
-    //     const expectedList = {
-    //         labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-    //         data: [250.97, 110.45, 0, 0, 0, 0, 0, 200, 0, 52, 0, 10]
-    //     };
+        const formatedList1 = ChartData.createData(entryList, '2020');
 
-    //     expect(formatedList).toEqual(expectedList);
-    // });
+        const expectedList1 = {
+            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            data: [250.97, 110.45, 0, 0, 0, 0, 0, 200, 0, 52, 0, 10]
+        };
+
+        expect(formatedList1).toEqual(expectedList1);
+
+        /*
+        | ---------------------------------------------------------------------------
+        | Scenario 2
+        | ---------------------------------------------------------------------------
+        */
+
+       const formatedList2 = ChartData.createData(entryList, '2019');
+
+       const expectedList2 = {
+           labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+           data: [0, 0, 0, 0, 0, 0, 0, 200, 0, 0, 0, 0]
+       };
+
+       expect(formatedList2).toEqual(expectedList2);
+    });
 });
