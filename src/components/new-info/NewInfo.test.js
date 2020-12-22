@@ -62,7 +62,7 @@ describe('<NewInfo/>', () => {
         const actionReturn = saveAction.mock.calls[0][0];
 
         expect(actionReturn.dateString).toBe('05/10/2020');
-        expect(actionReturn.value).toBe('450.65');
+        expect(actionReturn.value).toBe(450.65);
         expect(cancelAction).toBeCalled();
     });
 
