@@ -10,7 +10,7 @@ export class OrderEntity {
     ) {
         this.id = id ? id : ++OrderEntity.index;
         this.date = new Date(`${date}T00:00:00`);
-        this.value = value;
+        this.value = Number(value);
         this.type = type;
     }
     get dateString() {
