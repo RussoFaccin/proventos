@@ -3,6 +3,7 @@ import './App.css';
 
 // Components
 import NewInfo from './components/new-info/NewInfo.component';
+import AppChart from './components/app-chart/AppChart.coomponent';
 import OrderList from './components/order-list/OrderList';
 
 // Utils
@@ -131,6 +132,7 @@ const App = () => {
         </nav>
       </header>
       <main className="appContent">
+        <AppChart />
         <OrderList listEntry={appState.data.proventos} actionSelect={selectItem} actionDelete={deleteItem} />
       </main>
       {newInfoModal}
