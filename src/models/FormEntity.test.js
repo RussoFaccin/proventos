@@ -19,11 +19,13 @@ describe('FormEntity', () => {
 
     it('Should have defined values', () => {
         const formEntity = new FormEntity({
+            name: 'fld_date',
             label: 'Date',
             type: 'date',
             required: true
         });
 
+        expect(formEntity.name).toBe('fld_date');
         expect(formEntity.label).toBe('Date');
         expect(formEntity.type).toBe('date');
         expect(formEntity.value).toBe('');
