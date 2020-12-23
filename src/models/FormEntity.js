@@ -4,6 +4,7 @@
 export class FormEntity {
     /**
      * @param {Object} option
+     * @param {string} option.name
      * @param {string} option.label
      * @param {string} option.type
      * @param {string} option.value
@@ -11,12 +12,14 @@ export class FormEntity {
      * @param {pattern} option.pattern
      */
     constructor({
+        name = 'fld',
         label = '',
         type = 'text',
         value= '',
         required = false,
         pattern = ''
     }) {
+        this.name = name;
         this.label = label;
         this.type = type;
         this.value = value;
